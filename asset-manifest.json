@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/EComm_frontend/static/css/main.b718b97f.css",
-    "main.js": "/EComm_frontend/static/js/main.d08ad8ce.js",
+    "main.js": "/EComm_frontend/static/js/main.fa47f706.js",
     "index.html": "/EComm_frontend/index.html",
     "main.b718b97f.css.map": "/EComm_frontend/static/css/main.b718b97f.css.map",
-    "main.d08ad8ce.js.map": "/EComm_frontend/static/js/main.d08ad8ce.js.map"
+    "main.fa47f706.js.map": "/EComm_frontend/static/js/main.fa47f706.js.map"
   },
   "entrypoints": [
     "static/css/main.b718b97f.css",
-    "static/js/main.d08ad8ce.js"
+    "static/js/main.fa47f706.js"
   ]
 }
