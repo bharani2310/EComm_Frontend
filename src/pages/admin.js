@@ -30,6 +30,14 @@ const Admin = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  useEffect(()=>{
+    const value = JSON.parse(localStorage.getItem("user")); 
+    if(value?.role!=='admin'){
+      navigate('/home')
+    }
+    console.log(value)
+  })
+
   return (
     <div className="flex flex-col md:flex-row min-h-screen">
       {/* Sidebar */}

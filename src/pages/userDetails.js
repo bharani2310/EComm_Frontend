@@ -7,7 +7,7 @@ const UserDetails = () => {
   const { user, setUser } = useAuth(); // Assuming setUser updates user context
   const [formData, setFormData] = useState({
     name: user?.name || "",
-    dob: user?.dob || "",
+    dob: user?.dob ? user.dob.split("T")[0] : "",
     gender: user?.gender || "Male",
   });
 
@@ -25,7 +25,8 @@ const UserDetails = () => {
     setLoading(true);
 
     try {
-        const updatedUser = await updateUserDetails(user.id, formData);
+      console.log("User",user,formData)
+        const updatedUser = await updateUserDetails(user._id, formData);
         setUser(updatedUser); // Update state
         localStorage.setItem("user", JSON.stringify(updatedUser)); // ✅ Update localStorage
         toast.success("Profile updated successfully!");
@@ -49,7 +50,18 @@ const UserDetails = () => {
         <div className="space-y-3">
           <p><strong>Name:</strong> {user?.name}</p>
           <p><strong>Email:</strong> {user?.email}</p>
-          <p><strong>DOB:</strong> {user?.dob}</p>
+          <p>
+            <strong>DOB:</strong>{" "}
+            {user?.dob
+              ? (() => {
+                  const date = new Date(user.dob);
+                  const day = String(date.getDate()).padStart(2, "0");
+                  const month = String(date.getMonth() + 1).padStart(2, "0");
+                  const year = date.getFullYear();
+                  return `${day}-${month}-${year}`;
+                })()
+              : ""}
+          </p>
           <p><strong>Gender:</strong> {user?.gender}</p>
 
           <button 

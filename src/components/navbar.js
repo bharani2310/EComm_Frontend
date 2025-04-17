@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { HiOutlineShoppingCart } from 'react-icons/hi2';
+import { HiOutlineShoppingCart, HiOutlineMenu, HiX } from 'react-icons/hi';
 import { useAuth } from '../utils/authContext';
 import toast, { Toaster } from 'react-hot-toast';
 import SearchBar from './search';
@@ -8,11 +8,12 @@ import SearchBar from './search';
 const NavBar = () => {
   const { isAuthenticated, logout, user } = useAuth();
   const [redirect, setRedirect] = useState("profile");
+  const [menuOpen, setMenuOpen] = useState(false);
 
-  // Handle logout with toast
   const handleLogout = () => {
     logout();
     toast.success("Logged out successfully!");
+    setMenuOpen(false); // Close menu after logout
   };
 
   useEffect(() => {
@@ -23,41 +24,54 @@ const NavBar = () => {
     }
   }, [user]);
 
-  
-
   return (
     <nav className="bg-gray-800 text-white shadow-lg sticky top-0 z-50">
       <div className="max-w-screen-xl mx-auto px-4 py-4 flex justify-between items-center">
         <Toaster position="top-center" reverseOrder={false} />
-        
-        {/* Logo Section */}
-        <div className="flex items-center space-x-4">
-          <h1 className="text-2xl font-semibold">E-Shop</h1>
+
+        {/* Logo */}
+        <div className="text-2xl font-semibold">E-Shop</div>
+
+        {/* Desktop Search */}
+        <div className="hidden md:block flex-1 mx-6">
+          <SearchBar />
         </div>
 
-        {/* Search Bar */}
-        <SearchBar />
-
-        {/* Links */}
-        <div className="hidden md:flex space-x-8">
-          <Link to="/home" className="text-white hover:text-blue-600 transition duration-300">Home</Link>
+        {/* Desktop Links */}
+        <div className="hidden md:flex space-x-6">
+          <Link to="/home" className="hover:text-blue-400">Home</Link>
           {isAuthenticated ? (
             <>
-              <Link to={`/${redirect}`} className="text-white hover:text-blue-600 transition duration-300">Profile</Link>
-              <button 
-                onClick={handleLogout}
-                className="text-white hover:text-red-600 transition duration-300"
-              >
-                Logout
-              </button>
+              <Link to={`/${redirect}`} className="hover:text-blue-400">Profile</Link>
+              <button onClick={handleLogout} className="hover:text-red-400">Logout</button>
             </>
           ) : (
-            <Link to="/login" className="text-white hover:text-blue-600 transition duration-300">Login</Link>
+            <Link to="/login" className="hover:text-blue-400">Login</Link>
           )}
         </div>
 
-       
+        {/* Mobile Hamburger Icon */}
+        <div className="md:hidden">
+          <button onClick={() => setMenuOpen(!menuOpen)}>
+            {menuOpen ? <HiX size={24} /> : <HiOutlineMenu size={24} />}
+          </button>
+        </div>
       </div>
+
+      {/* Mobile Menu */}
+      {menuOpen && (
+        <div className="md:hidden px-4 pb-4 space-y-3 bg-gray-700 text-white">
+          <Link to="/home" className="block hover:text-blue-400" onClick={() => setMenuOpen(false)}>Home</Link>
+          {isAuthenticated ? (
+            <>
+              <Link to={`/${redirect}`} className="block hover:text-blue-400" onClick={() => setMenuOpen(false)}>Profile</Link>
+              <button onClick={handleLogout} className="block w-full text-left hover:text-red-400">Logout</button>
+            </>
+          ) : (
+            <Link to="/login" className="block hover:text-blue-400" onClick={() => setMenuOpen(false)}>Login</Link>
+          )}
+        </div>
+      )}
     </nav>
   );
 };

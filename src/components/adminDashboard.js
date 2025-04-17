@@ -17,6 +17,8 @@ const AdminDashboard = () => {
     fetchUser();
   }, []);
 
+  
+
   return (
     <div className="flex justify-center items-center min-h-screen p-6">
       <div className="flex items-center p-6 bg-blue-500 text-white shadow-lg rounded-xl">

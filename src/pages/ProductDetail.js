@@ -35,7 +35,7 @@ const ProductDetail = () => {
 
     try {
       await addToCart(user.id, {
-        id: product.id,
+        id: product._id,
         name: product.name,
         price: product.price,
         quantity,

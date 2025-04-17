@@ -76,15 +76,17 @@ const Product = () => {
   };
 
   const handleEditProduct = () => {
-    if (!selectedProduct) return toast.error("Select a product to edit");
+    if (!selectedProduct) return window.alert("Select a product to edit");
 
-    const productToEdit = products.find((p) => p.id === selectedProduct);
+    console.log(selectedProduct,products)
+
+    const productToEdit = products.find((p) => p._id === selectedProduct);
     if (!productToEdit) return;
 
     setName(productToEdit.name);
     setPrice(productToEdit.price);
     setStock(productToEdit.stock);
-    setCategoryId(productToEdit.categoryId);
+    setCategoryId(productToEdit?.categoryId);
     setImageBase64(productToEdit.imageBase64);
     setUnit(productToEdit.unit);
     setActualWeight(productToEdit.actualWeight);
@@ -192,7 +194,7 @@ const Product = () => {
         >
           <option value="">Select Category</option>
           {categories.map((category) => (
-            <option key={category.id} value={category.id}>
+            <option key={category._id} value={category._id}>
               {category.name}
             </option>
           ))}
@@ -239,14 +241,14 @@ const Product = () => {
         </thead>
         <tbody>
           {displayedProducts.map((product) => (
-            <tr key={product.id} className="border">
+            <tr key={product._id} className="border">
               <td>
-                <input type="radio" name="selectedProduct" checked={selectedProduct === product.id} onChange={() => setSelectedProduct(product.id)} />
+                <input type="radio" name="selectedProduct" checked={selectedProduct === product._id} onChange={() => setSelectedProduct(product._id)} />
               </td>
               <td>{product.name}</td>
               <td>₹{product.price}</td>
               <td>{product.stock}</td>
-              <td>{categories.find((c) => c.id === product.categoryId)?.name || "Unknown"}</td>
+              <td>{product.categoryId?.name || "Unknown"}</td>
               <td>{product.unit}</td>
               <td>{product.actualWeight}</td>
               <td>{product.imageBase64 && <img src={product.imageBase64} alt="Product" className="w-12 h-12 mx-auto" />}</td>

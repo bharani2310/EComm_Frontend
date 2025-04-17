@@ -1,1 +1,1 @@
-export const BASE_URL = "http://localhost:4000/ecommerce"
+export const BASE_URL = "http://192.168.1.27:4000/ecommerce"

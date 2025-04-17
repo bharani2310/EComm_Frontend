@@ -23,9 +23,9 @@ const DetailsPage = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {products.map((product) => (
             <div
-              key={product.id}
+              key={product._id}
               className="border p-4 rounded-lg shadow-md bg-gray-50 cursor-pointer hover:bg-gray-100 transition duration-300"
-              onClick={() => navigate(`/product/${product.id}`, { state: { item: product } })}
+              onClick={() => navigate(`/product/${product._id}`, { state: { item: product } })}
             >
               <img
                 src={`${product.imageBase64}`}

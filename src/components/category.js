@@ -23,6 +23,9 @@ const Category = () => {
     getCategories();
   }, []);
 
+
+
+  
   // Handle adding a category
   const handleAddCategory = async (e) => {
     e.preventDefault();
@@ -52,7 +55,7 @@ const Category = () => {
   
       const newCategory = prompt("Edit category:", categoryToEdit.name);
       if (newCategory) {
-        const response=await updateCategory(categoryToEdit.id, newCategory); // Use correct ID
+        const response=await updateCategory(categoryToEdit?._id, newCategory); // Use correct ID
         const updatedCategories = categories.map((cat, index) =>
           index === selectedCategory ? { ...cat, name: newCategory } : cat
         );
@@ -71,10 +74,10 @@ const Category = () => {
       if (!categoryToDelete) return;
   
       // Ask for confirmation
-      const isConfirmed = window.confirm(`Are you sure you want to delete "${categoryToDelete.name}"?`);
+      const isConfirmed = window.confirm(`Deleting this will also delete all the products that are associated with "${categoryToDelete.name}"`);
       if (!isConfirmed) return; // If user cancels, do nothing
   
-      const response=await deleteCategory(categoryToDelete.id); 
+      const response=await deleteCategory(categoryToDelete?._id); 
       if(response===1){
         setCategories(categories.filter((_, i) => i !== selectedCategory)); // Remove from state
         setSelectedCategory(null);
